@@ -1,0 +1,17 @@
+name: example
+description: A simple command-line application.
+version: 1.0.0
+repository: https://github.com/bvoq/fast_immutable_equatable
+publish_to: none
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  benchmark_harness: ^2.2.0
+  equatable: ^2.0.3
+  fast_immutable_equatable:
+    path: ../
+
+dev_dependencies:
+  lints: ^2.0.0

@@ -1,6 +1,27 @@
-## Overview
+# fast_immutable_equatable
 
 This is a Dart package derived from [`fast_equatable`](https://pub.dev/packages/fast_equatable) (adding cached values) and [`equatable`](https://pub.dev/packages/equatable) (adding immutability).
+
+## Migration
+
+### How to migrate from [`equatable`](https://pub.dev/packages/equatable)
+
+- Rename `class MyClass with EquatableMixin` to `class MyClass with IFastEquatable`.
+- Rename `class MyClass extends Equatable` to `class MyClass extends IFastEquatable`.
+- Rename `List<Object> get props` to `List<Object?> get hashParameters`.
+- Add:
+  
+  ```dart
+  @override
+  bool get cacheHash => true;
+  ```
+
+### How to migrate from [`fast_equatable`](https://pub.dev/packages/fast_equatable)
+
+- Rename `class MyClass with FastEquatable` to `class MyClass with IFastEquatable`.
+- Make fields immutable by adding `final` (the dart linter should complain for you since the class is automatically marked immutable).
+
+## Overview
 
 The hashes are cached using a double lookup trick on a static map which keeps the immutability.
 
@@ -22,7 +43,7 @@ However, since `IFastEquatable` is marked immutable, you can also use regular `L
 
 ## How to use IFastEquatable in a new project
 
-Using the mixedin approach (recommended):
+Using the interface approach (recommended):
 
 ```dart
 class A with IFastEquatable {
@@ -39,6 +60,7 @@ class A with IFastEquatable {
 ```
 
 ### How to subclass A
+
 The library forces you to adhere to a certain style when dealing with subclasses and hashParameters.
 It's important that hashParameters are called with a spread operator, otherwise you will get a warning from the compiler.
 
@@ -55,24 +77,6 @@ class AB extends A {
 }
 ```
 
-
-## Migration
-### How to migrate from [`equatable`](https://pub.dev/packages/equatable)
-- Rename `class MyClass with EquatableMixin` to `class MyClass with IFastEquatable`.
-- Rename `class MyClass extends Equatable` to `class MyClass extends IFastEquatable`.
-- Rename `List<Object> get props` to `List<Object?> get hashProperties`.
-- Add:
-```dart
-@override
-bool get cacheHash => true;
-```
-
-### How to migrate from [`fast_equatable`](https://pub.dev/packages/fast_equatable)
-- Rename `class MyClass with FastEquatable` to `class MyClass with IFastEquatable`.
-- Rename `List<Object> get props` to `List<Object?> get hashProperties`.
-- Make fields immutable by adding `final` (the dart linter should complain for you since the class is automatically marked immutable).
-
-
 ## Benchmark
 
 In the `example` you will find a benchmark code, showing off the resulting speed improvement.
@@ -84,4 +88,3 @@ equatable for 1000000 elements(RunTime): 4789464.0 us.
 fast_immutable_equatable (uncached) for 1000000 elements(RunTime): 4467237.0 us.
 fast_immutable_equatable (cached) for 1000000 elements(RunTime): 3723849.5 us.
 ```
-

@@ -1,6 +1,6 @@
 name: fast_immutable_equatable
 description: A simple Dart package that provides immutable equatable's with the option to store the hashes.
-version: 1.0.1
+version: 1.0.2
 repository: https://github.com/bvoq/fast_immutable_equatable
 
 environment:
